@@ -57,12 +57,12 @@ const RegisterForm = () => {
         <input name="phoneNo" id="phoneNumber" value={registerForm.phoneNo} onChange={handleFormChange} />
       </div>
       <div>
-        <label htmlFor="startDate">Start date</label><br />
-        <Calendar dateFormat="dd/mm/yy" value={registerForm.startDate} onChange={handleStartDateChange} placeholder="กรุณากรอกวันเริ่มต้น" />
+        <label htmlFor="startDate">วันเริ่มต้น</label><br />
+        <Calendar dateFormat="dd/mm/yy" value={registerForm.startDate} onChange={handleStartDateChange} inputId="startDate" placeholder="กรุณากรอกวันเริ่มต้น" data-testid="startDate" />
       </div>
       <div>
-        <label htmlFor="endDate">End date</label><br />
-        <Calendar dateFormat="dd/mm/yy" value={registerForm.endDate} onChange={handleEndDateChange} placeholder="กรุณากรอกวันสิ้นสุด" />
+        <label htmlFor="endDate">วันสิ้นสุด</label><br />
+        <Calendar dateFormat="dd/mm/yy" value={registerForm.endDate} onChange={handleEndDateChange} inputId="endDate" placeholder="กรุณากรอกวันสิ้นสุด" />
       </div>
       {!isValidDate && (
         <p>วันที่ไม่ถูกต้อง</p>
