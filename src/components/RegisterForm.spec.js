@@ -17,16 +17,15 @@ describe("RegisterForm", () => {
     expect(phoneNoInput).toHaveValue("090-123-4567");
   });
 
-  it("phone number format 6 digits", () => {
-    // arrange
+  it("endDate before startDate should show error", () => {
     render(<RegisterForm />);
 
-    // act
-    // fill phone number 10 digits
-    const phoneNoInput = screen.getByRole("textbox", { name: /เบอร์โทรศัพท์/i });
-    user.type(phoneNoInput, "090123");
+    expect(screen.queryByText("วันที่ไม่ถูกต้อง")).not.toBeInTheDocument();
 
-    // assert
-    expect(phoneNoInput).toHaveValue("090-123");
-  });
+    user.type(screen.getByPlaceholderText("กรุณากรอกวันเริ่มต้น"), "02/08/2022");
+    user.type(screen.getByPlaceholderText("กรุณากรอกวันสิ้นสุด"), "01/08/2022");
+
+    expect(screen.getByText("วันที่ไม่ถูกต้อง")).toBeInTheDocument();
+  })
+
 })

@@ -1,8 +1,17 @@
 import {useState} from "react";
+import { Calendar } from 'primereact/calendar';
+
+function validateDateRange(startDate, endDate) {
+  if (startDate == null) return true
+  if (endDate == null) return true
+  return startDate.getTime() <= endDate.getTime();
+}
 
 const RegisterForm = () => {
   const [registerForm, setRegisterForm] = useState({
-    phoneNo: ""
+    phoneNo: "",
+    startDate: null,
+    endDate: null
   })
 
   function formatPhoneNo(phoneNo) {
@@ -14,6 +23,22 @@ const RegisterForm = () => {
       return phoneNo;
     }
   }
+
+  function handleStartDateChange(e) {
+    setRegisterForm((prevState) => ({
+      ...prevState,
+      startDate: e.value
+    }))
+  }
+
+  function handleEndDateChange(e) {
+    setRegisterForm((prevState) => ({
+      ...prevState,
+      endDate: e.value
+    }))
+  }
+
+  const isValidDate = validateDateRange(registerForm.startDate, registerForm.endDate)
 
   function handleFormChange(e) {
     setRegisterForm((prevState) => {
@@ -31,6 +56,17 @@ const RegisterForm = () => {
         <label htmlFor="phoneNumber">เบอร์โทรศัพท์</label><br />
         <input name="phoneNo" id="phoneNumber" value={registerForm.phoneNo} onChange={handleFormChange} />
       </div>
+      <div>
+        <label htmlFor="startDate">Start date</label><br />
+        <Calendar dateFormat="dd/mm/yy" value={registerForm.startDate} onChange={handleStartDateChange} placeholder="กรุณากรอกวันเริ่มต้น" />
+      </div>
+      <div>
+        <label htmlFor="endDate">End date</label><br />
+        <Calendar dateFormat="dd/mm/yy" value={registerForm.endDate} onChange={handleEndDateChange} placeholder="กรุณากรอกวันสิ้นสุด" />
+      </div>
+      {!isValidDate && (
+        <p>วันที่ไม่ถูกต้อง</p>
+      )}
     </div>
   )
 }
